@@ -4,11 +4,13 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
+import path from "path";
 
 dotenv.config();
 
-// import placeRouter from "./api/routes/places";
-// import userRouter from "./api/routes/user";
+import recipeRouter from "./api/routes/recipes";
+import userRouter from "./api/routes/user";
+import lifestyleRouter from "./api/routes/lifestyle";
 
 const DBNAME = process.env.DB_NAME;
 const DBPASSWORD = process.env.DB_PASSWORD;
@@ -28,8 +30,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// app.use("/api", placeRouter);
-// app.use("/api/user", userRouter);
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+
+app.use("/user", userRouter);
+app.use("/api", recipeRouter);
+app.use("/api", lifestyleRouter);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
