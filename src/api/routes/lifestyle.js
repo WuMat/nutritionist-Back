@@ -3,6 +3,8 @@ import { body } from "express-validator/check";
 import multer from "multer";
 
 import { createLifestyle } from "../controllers/lifestyle/create";
+import { getAllLifestyle } from "../controllers/lifestyle/getAll";
+import { getOneLifestyle } from "../controllers/lifestyle/getOne";
 
 import { authorization } from "../middleware/authorization";
 
@@ -16,6 +18,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
+  console.log("wchodzi");
   if (file.mimetype === "image/jpeg") {
     cb(null, true);
   } else {
@@ -39,6 +42,8 @@ const router = express.Router();
 // ];
 
 // router.post("/recipe", [...validation], createRecipe);
-router.post("/lifestyle", upload, createLifestyle);
+router.post("/create", upload, createLifestyle);
+router.post("/getAll", getAllLifestyle);
+router.post("/getOne", getOneLifestyle);
 
 export default router;

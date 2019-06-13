@@ -33,8 +33,8 @@ app.use(bodyParser.json());
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use("/user", userRouter);
-app.use("/api", recipeRouter);
-app.use("/api", lifestyleRouter);
+app.use("/api/recipe", recipeRouter);
+app.use("/api/lifestyle", lifestyleRouter);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;

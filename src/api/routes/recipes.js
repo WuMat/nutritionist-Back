@@ -3,6 +3,9 @@ import { body } from "express-validator/check";
 import multer from "multer";
 
 import { createRecipe } from "../controllers/recipes/create";
+import { getAllRecipe } from "../controllers/recipes/getAll";
+import { getOneRecipe } from "../controllers/recipes/getOne";
+import { updateRecipe } from "../controllers/recipes/update";
 
 import { authorization } from "../middleware/authorization";
 
@@ -16,6 +19,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
+  console.log("object");
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
     cb(null, true);
   } else {
@@ -39,6 +43,9 @@ const router = express.Router();
 // ];
 
 // router.post("/recipe", [...validation], createRecipe);
-router.post("/recipe", upload, createRecipe);
+router.post("/create", upload, createRecipe);
+router.post("/getAll", getAllRecipe);
+router.post("/getOne", getOneRecipe);
+router.post("/update", updateRecipe);
 
 export default router;

@@ -6,7 +6,6 @@ const lifestyleSchema = new Schema(
     description_short: { type: String, required: false },
     paragraf: [{ description: String }],
     mainImage: { type: String, required: false },
-    // epik: [Schema.Types.Mixed]
     epik: [
       {
         title: String,

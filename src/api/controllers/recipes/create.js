@@ -16,32 +16,31 @@ export const createRecipe = async (req, res, next) => {
       error.statusCode = 422;
       throw error;
     }
+    console.warn(data.imagesName);
 
-    const imagesReq = req.files;
-    const mainImg = imagesReq
-      .filter(el => el.originalname.slice(0, -4) === "Main image")[0]
-      .path.replace("\\", "/");
-
-    const imagesOther = imagesReq.filter(
-      el => el.originalname.slice(0, -4) !== "Main image"
-    );
-    const changePath = imagesOther.map(el => el.path.replace("\\", "/"));
     const recipe = new Recipe({
       title: data.title,
       timePrepare: data.timePrepare,
       portion: data.portion,
-      stepsPrepare: data.stepsPrepare,
-      ingredient: data.ingredient,
-      main_img: mainImg,
-      images: changePath
+      category: data.category,
+      description_short: data.description_short,
+      stepsPrepare: JSON.parse(data.stepsPrepare),
+      ingredient: JSON.parse(data.ingredient),
+      main_img: data.main_img,
+      imagesName: JSON.parse(data.imagesName),
+      note: [],
+      rate: 0
     });
 
     await recipe.save();
     return res.status(200).json({
       message: "Recipe is Created",
-      recipe: recipe
+      succes: true
     });
   } catch (error) {
+    // error = {
+    //   message: { succes: false }
+    // };
     if (!error.statusCode) {
       error.statusCode = 500;
     }
