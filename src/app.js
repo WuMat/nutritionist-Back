@@ -11,6 +11,7 @@ dotenv.config();
 import recipeRouter from "./api/routes/recipes";
 import userRouter from "./api/routes/user";
 import lifestyleRouter from "./api/routes/lifestyle";
+import mix from "./api/routes/mix";
 
 const DBNAME = process.env.DB_NAME;
 const DBPASSWORD = process.env.DB_PASSWORD;
@@ -35,6 +36,7 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/user", userRouter);
 app.use("/api/recipe", recipeRouter);
 app.use("/api/lifestyle", lifestyleRouter);
+app.use("/api/mix", mix);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;

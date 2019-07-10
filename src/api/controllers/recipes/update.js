@@ -2,7 +2,8 @@ import Recipe from "../../models/recipe";
 
 export const updateRecipe = async (req, res, next) => {
   const data = { ...req.body };
-  const recipeId = data.data.id;
+  const recipeId = data.id;
+  console.log(data);
   try {
     // const recipe = await Recipe.findById(placeId);
     // if (!recipe) {
@@ -12,10 +13,15 @@ export const updateRecipe = async (req, res, next) => {
     //   throw error;
     // }
     console.log("wchodzi przed update");
-    await Recipe.updateOne(
-      { _id: recipeId },
-      { $push: { note: data.data.note } }
-    );
+    if (data.note) {
+      await Recipe.updateOne({ _id: recipeId }, { $push: { note: data.note } });
+    }
+    if (data.rate) {
+      await Recipe.updateOne({ _id: recipeId }, { $inc: { rateClick: 1 } });
+      const dataaa = await Recipe.find({ _id: recipeId });
+      console.log(dataaa);
+      console.log("RATING", typeof dataaa[0].rate);
+    }
     console.log("za update");
     return res.status(200).json({ message: "successful" });
   } catch (error) {

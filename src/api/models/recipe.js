@@ -10,6 +10,10 @@ const recipeSchema = new Schema(
     description_short: { type: String, required: false },
     stepsPrepare: [{ id: String, val: String, required: false }],
     note: [{ nick: String, comment: String }],
+    rate: Number,
+    rateClick: Number,
+    rateSum: Number,
+    type: Number,
     ingredient: [
       {
         id: String,

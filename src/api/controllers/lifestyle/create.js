@@ -23,7 +23,8 @@ export const createLifestyle = async (req, res, next) => {
       description_short: data.description_short,
       mainImage: data.mainImage,
       paragraf: JSON.parse(data.paragraf),
-      epik: JSON.parse(data.epik)
+      epik: JSON.parse(data.epik),
+      type: 2
     });
 
     await lifestyle.save();

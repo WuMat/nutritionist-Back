@@ -1,11 +1,22 @@
 import Recipe from "../../models/recipe";
 
 export const getAllRecipe = async (req, res, next) => {
-  console.log("wchodzi do alla");
+  const dataReq = req.body;
   try {
-    const recipe = await Recipe.find().select(
-      "title category description_short main_img _id"
-    );
+    let recipe = null;
+    let count = null;
+    if (dataReq.filter.length > 1) {
+      recipe = await Recipe.find({ category: dataReq.filter })
+        .select("title category description_short main_img _id rate rateClick")
+        .limit(4);
+      count = await Recipe.countDocuments();
+    } else {
+      recipe = await Recipe.find()
+        .select("title category description_short main_img _id rate rateClick")
+        .limit(4);
+      count = await Recipe.countDocuments();
+    }
+
     if (!recipe) {
       const error = new Error("Przepisow nie znaleziono");
       error.statusCode = 404;
@@ -14,7 +25,7 @@ export const getAllRecipe = async (req, res, next) => {
     return res.status(200).json({
       succes: true,
       recipes: recipe,
-      type: 1
+      count
     });
   } catch (error) {
     // error = {

@@ -6,6 +6,7 @@ const lifestyleSchema = new Schema(
     description_short: { type: String, required: false },
     paragraf: [{ description: String }],
     mainImage: { type: String, required: false },
+    type: Number,
     epik: [
       {
         title: String,

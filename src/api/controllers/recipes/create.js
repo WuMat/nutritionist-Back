@@ -16,7 +16,6 @@ export const createRecipe = async (req, res, next) => {
       error.statusCode = 422;
       throw error;
     }
-    console.warn(data.imagesName);
 
     const recipe = new Recipe({
       title: data.title,
@@ -29,7 +28,10 @@ export const createRecipe = async (req, res, next) => {
       main_img: data.main_img,
       imagesName: JSON.parse(data.imagesName),
       note: [],
-      rate: 0
+      rate: 0,
+      rateClick: 0,
+      rateSum: 0,
+      type: 1
     });
 
     await recipe.save();
