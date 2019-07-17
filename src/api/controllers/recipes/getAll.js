@@ -5,14 +5,18 @@ export const getAllRecipe = async (req, res, next) => {
   try {
     let recipe = null;
     let count = null;
+    console.log(dataReq);
     if (dataReq.filter.length > 1) {
       recipe = await Recipe.find({ category: dataReq.filter })
+        .sort({ $natural: -1 })
         .select("title category description_short main_img _id rate rateClick")
         .limit(4);
-      count = await Recipe.countDocuments();
+      count = await Recipe.find({ category: dataReq.filter }).count();
     } else {
       recipe = await Recipe.find()
+        .sort({ $natural: -1 })
         .select("title category description_short main_img _id rate rateClick")
+        .skip((dataReq.page - 1) * 4)
         .limit(4);
       count = await Recipe.countDocuments();
     }

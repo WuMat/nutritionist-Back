@@ -7,8 +7,11 @@ export const createUser = async (req, res, next) => {
   console.log("wchodzi");
   const data = { ...req.body };
   const errors = validationResult(req);
+  console.log("ERRORY PRZED", errors);
+  console.log("data", data);
   try {
     if (!errors.isEmpty()) {
+      console.log("RROR");
       const error = new Error("Validation failed");
       error.statusCode = 404;
       error.data = errors.array();

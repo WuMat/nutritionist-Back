@@ -3,7 +3,6 @@ import Recipe from "../../models/recipe";
 export const updateRecipe = async (req, res, next) => {
   const data = { ...req.body };
   const recipeId = data.id;
-  console.log(data);
   try {
     // const recipe = await Recipe.findById(placeId);
     // if (!recipe) {
@@ -17,12 +16,18 @@ export const updateRecipe = async (req, res, next) => {
       await Recipe.updateOne({ _id: recipeId }, { $push: { note: data.note } });
     }
     if (data.rate) {
-      await Recipe.updateOne({ _id: recipeId }, { $inc: { rateClick: 1 } });
-      const dataaa = await Recipe.find({ _id: recipeId });
-      console.log(dataaa);
-      console.log("RATING", typeof dataaa[0].rate);
+      const recipeRecord = await Recipe.find({ _id: recipeId });
+      const ratingUpdate =
+        (recipeRecord[0].rateSum + data.rate) / (recipeRecord[0].rateClick + 1);
+
+      await Recipe.updateOne(
+        { _id: recipeId },
+        {
+          $inc: { rateClick: 1, rateSum: data.rate },
+          $set: { rate: ratingUpdate }
+        }
+      );
     }
-    console.log("za update");
     return res.status(200).json({ message: "successful" });
   } catch (error) {
     console.log("ERROR");

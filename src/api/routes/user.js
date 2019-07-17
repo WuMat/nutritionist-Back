@@ -15,7 +15,6 @@ router.post(
       .custom(async (value, { req }) => {
         const user = await User.findOne({ name: value });
         if (user) {
-          console.log("exist");
           const error = new Error("User exist");
           throw error;
         }
