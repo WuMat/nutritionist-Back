@@ -5,7 +5,10 @@ import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
 import path from "path";
+import mongo from "mongodb";
 
+mongo.MongoClient;
+const url = "mongodb://127.0.0.1:27017";
 dotenv.config();
 
 import recipeRouter from "./api/routes/recipes";
@@ -16,11 +19,16 @@ import mix from "./api/routes/mix";
 const DBNAME = process.env.DB_NAME;
 const DBPASSWORD = process.env.DB_PASSWORD;
 
+// mongoose
+//   .connect(
+//     `mongodb://${DBNAME}:${DBPASSWORD}@ds127376.mlab.com:27376/nutritionist`,
+//     { useNewUrlParser: true }
+//   )
+//   .then(result => console.log("database is connected"))
+//   .catch(err => console.log(err));
+
 mongoose
-  .connect(
-    `mongodb://${DBNAME}:${DBPASSWORD}@ds127376.mlab.com:27376/nutritionist`,
-    { useNewUrlParser: true }
-  )
+  .connect(url)
   .then(result => console.log("database is connected"))
   .catch(err => console.log(err));
 
