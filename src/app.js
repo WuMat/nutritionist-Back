@@ -38,7 +38,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+console.log("cos chyba laczy");
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use("/user", userRouter);

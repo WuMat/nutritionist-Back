@@ -4,6 +4,7 @@ import Recipe from "../../models/recipe";
 
 export const createRecipe = async (req, res, next) => {
   const data = { ...req.body };
+  console.log("wchodzi do tworzenia");
   try {
     // const errors = validationResult(req);
     // if (!errors.isEmpty()) {
